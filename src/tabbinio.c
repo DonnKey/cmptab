@@ -25,7 +25,7 @@ static char *tempfile;
 void packword(w)
 int w;
 {
-        fwrite((char *)&w, sizeof(w),  1, mx1);
+        fwrite((char *)&w, sizeof(w), 1, mx1);
 }
 
 void packbits(str0)
@@ -34,7 +34,7 @@ bitstring str0;
         int w;
 
         w = sizeof(struct bitstring)+(str0->length+8)/8;
-        fwrite((char *)&w, sizeof(w), 1,  mx1);
+        fwrite((char *)&w, sizeof(w), 1, mx1);
         fwrite((char *)str0, w, 1, mx1);
 }
 /* **********************
@@ -71,20 +71,20 @@ void backup()
    packword(no_states);
    packword(no_prods);
    packword(prod_array_ptr);
-   for (state_no = 0; state_no  <= no_states; state_no++) {
+   for (state_no = 0; state_no <= no_states; state_no++) {
       packword(accessing_symbol[state_no]);
    }
-   for (rule = 1;  rule <= no_prods; rule++) {
+   for (rule = 1; rule <= no_prods; rule++) {
       packbits(reduce_set[rule]);
       packword(rhs_len[rule]);
       packword(prod_start[rule]);
    }
-   for (ptr = 1; ptr  <=prod_array_ptr;  ptr++) {
+   for (ptr = 1; ptr <=prod_array_ptr; ptr++) {
       packword(prod_array[ptr]);
    }
-   for (state_no = 0; state_no  <= no_states; state_no++) {
-      for (sym = 1; sym  <= last_nt; sym++) {
-         packword(stripped_action_table(state_no,  sym));
+   for (state_no = 0; state_no <= no_states; state_no++) {
+      for (sym = 1; sym <= last_nt; sym++) {
+         packword(stripped_action_table(state_no, sym));
       }
    }
    fflush(mx1);
@@ -93,7 +93,7 @@ void backup()
 int getword()
 {
      int word;
-     fread((char *)&word,  sizeof(word), 1, mx1);
+     fread((char *)&word, sizeof(word), 1, mx1);
 
      return word;
 }
@@ -127,20 +127,20 @@ void restore()
    no_states = getword();
    no_prods = getword();
    prod_array_ptr = getword();
-   for (state_no = 0; state_no  <= no_states; state_no++) {
-      accessing_symbol[state_no]  = getword();
+   for (state_no = 0; state_no <= no_states; state_no++) {
+      accessing_symbol[state_no] = getword();
    }
-   for (rule = 1;  rule <= no_prods; rule++) {
+   for (rule = 1; rule <= no_prods; rule++) {
       reduce_set[rule] = getbits();
       rhs_len[rule] = getword();
       prod_start[rule] = getword();
    }
-   for (ptr = 1; ptr <= prod_array_ptr;  ptr++) {
+   for (ptr = 1; ptr <= prod_array_ptr; ptr++) {
       prod_array[ptr] = getword();
    }
-   for (state_no = 0; state_no  <= no_states; state_no++) {
-      for (sym = 1; sym  <=last_nt;  sym++) {
-         action_table(state_no,  sym) = getword();
+   for (state_no = 0; state_no <= no_states; state_no++) {
+      for (sym = 1; sym <= last_nt;  sym++) {
+         action_table(state_no, sym) = getword();
       }
    }
 }

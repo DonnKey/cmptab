@@ -17,7 +17,7 @@ extern FILE *mso;
                         *                              *
                         ********************************
 */
-vocab_symbol last_lhs_printed,  last_lhs_punched;
+vocab_symbol last_lhs_printed, last_lhs_punched;
 
 void print_prod(n)
 production_ptr n;
@@ -38,11 +38,11 @@ production_ptr n;
    last_lhs_printed = sym;
    /*  add on the right part  */
    var = prod_start[n];
-   for (s = var + 1; s <= var +  rhs_len[n]; s++) {
-/*   if (left_precedence[prod_array[s]]  != 0)
+   for (s = var + 1; s <= var + rhs_len[n]; s++) {
+/*   if (left_precedence[prod_array[s]] != 0)
          printf(" (p%d)",left_precedence[prod_array[s]]);  */
      printf(" 4s", v[prod_array[s]]);
-/*   if (right_precedence[prod_array[s]]  != 0)
+/*   if (right_precedence[prod_array[s]] != 0)
          printf(" (p%d)  ",right_precedence[prod_array[s]]); */
    }
    printf("\n");
@@ -50,7 +50,7 @@ production_ptr n;
 void punch_prod(n)
 production_ptr n;
 {
-   production_symbols_ptr  s;
+   production_symbols_ptr s;
    vocab_symbol sym;
    production_symbols_ptr var;
    char *text;
@@ -65,7 +65,7 @@ production_ptr n;
    }
    /*  ADD ON THE RIGHT PART   */
    var = prod_start[n];
-   for (s = var + 1; s <= var  + rhs_len[n]; s++) {
+   for (s = var + 1; s <= var + rhs_len[n]; s++) {
       fprintf(mso, " %s",v[prod_array[s]]);
    }
    fprintf(mso, "\n");
@@ -82,26 +82,26 @@ int print, punch;
 
    /*  PRINT THE PRODUCTIONS   */;
    double_space;
-   last_lhs_printed =  last_lhs_punched = 0;
+   last_lhs_printed = last_lhs_punched = 0;
    if (print) {
       printf("                     t h e   p r o d u c t i o n s\n");
       double_space;
-      printf("   The goal  symbol is %s.\n",v[goal_symbol]);
+      printf("   The goal symbol is %s.\n",v[goal_symbol]);
    }
-   /*  THE PRODUCTION ADDED  AUTOMATICALLY IS NOT PRINTED  */;
+   /*  THE PRODUCTION ADDED AUTOMATICALLY IS NOT PRINTED  */;
    v[last_nt + 1] = "?";
-   for (i = first_nt; i  <= last_nt + 1; i++) {
+   for (i = first_nt; i <= last_nt + 1; i++) {
       order[i] = 1;
    }
    order[first_nt] = goal_symbol;
-   order[goal_symbol]  = first_nt;
-   for (i = first_nt;  i <= last_nt + 1; i++) {
+   order[goal_symbol] = first_nt;
+   for (i = first_nt; i <= last_nt + 1; i++) {
       lhs = order[i];
-      for (n = 1; n  <= no_prods; n++) {
-         if (prod_start[n]  != 0 && prod_array[prod_start[n]] == lhs) {
+      for (n = 1; n <= no_prods; n++) {
+         if (prod_start[n] != 0 && prod_array[prod_start[n]] == lhs) {
             /*  IF ITS THERE   */
-            if  (print)print_prod(n);
-            if  (punch)punch_prod(n);
+            if (print)print_prod(n);
+            if (punch)punch_prod(n);
          }
       }
    }

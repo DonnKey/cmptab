@@ -10,13 +10,13 @@
 
 /*                      ********************************
                         *                              *
-                        *         READ  INPUT          *
+                        *         READ INPUT           *
                         *                              *
                         ********************************
 */
 
 #define CARD_SIZE 200
-boolean e_o_f = false;  /*  GLOBAL FOR  TESTING  */
+boolean e_o_f = false;  /*  GLOBAL FOR TESTING  */
 static int card_ptr = 999, card_len;
 static char card_image[CARD_SIZE];
 static boolean continued_card;
@@ -26,19 +26,19 @@ static boolean continued_card;
       int j;
       if (e_o_f) return false;
 
-      /*  READ AND RETURN A CARD IMAGE  OR FALSE ON EOF  */;
+      /*  READ AND RETURN A CARD IMAGE OR FALSE ON EOF  */;
       card_ptr = 0;
       while (true) {
-         if (fgets(card_image, CARD_SIZE-1,  stdin) == NULL) {
+         if (fgets(card_image, CARD_SIZE-1, stdin) == NULL) {
             e_o_f = true;
             return false;
          }
-         /*  GUARANTEE A BLANK IN TEST  FOR META BRACKETS  */
-         if (control[ls]) printf("%s",  card_image);
+         /*  GUARANTEE A BLANK IN TEST FOR META BRACKETS  */
+         if (control[ls]) printf("%s", card_image);
          card_len = strlen(card_image);
          card_len--;
-         card_image[card_len] =  ' ';
-         continued_card = (card_image[card_len-1]  == '$');
+         card_image[card_len] = ' ';
+         continued_card = (card_image[card_len-1] == '$');
          if (continued_card) { card_len--; card_image[card_len] = ' '; }
          for (j=0; j<card_len; j++) if (card_image[j] != ' ') return true;
       }
@@ -58,26 +58,26 @@ char **result1;
 /* #### Page 2 */
    boolean no_stop_found;
 
-   if (card_ptr >= 999 &&  !read_card()) return false;
+   if (card_ptr >= 999 && !read_card()) return false;
    while (true) {
-      /*  WATCH FOR ABNORMAL  EXITS FROM THIS LOOP  */
-      if (card_ptr >=  card_len) {
+      /*  WATCH FOR ABNORMAL EXITS FROM THIS LOOP  */
+      if (card_ptr >= card_len) {
               if (continued_card) {
                  if (!read_card()) return false;
               }
-              else  break;
+              else break;
       }
 
-      if (card_image[card_ptr]  != blank) {
+      if (card_image[card_ptr] != blank) {
          lp = card_ptr;          /*  MARK LEFT BOUNDARY  */
-         if  (card_image[lp] == left_bracket && card_image[lp + 1]  !=blank)
-                 stop = right_bracket;
-         else   stop  = blank;
+         if (card_image[lp] == left_bracket && card_image[lp + 1] != blank)
+               stop = right_bracket;
+         else  stop = blank;
          /*  NOW  LOOK FOR STOP  */;
-         no_stop_found  = true;
-         while (no_stop_found  && card_ptr < card_len)  {
-            card_ptr  = card_ptr + 1;
-            if  (card_image[card_ptr] == stop) no_stop_found = false;
+         no_stop_found = true;
+         while (no_stop_found && card_ptr < card_len) {
+            card_ptr = card_ptr + 1;
+            if (card_image[card_ptr] == stop) no_stop_found = false;
          }
          /*   IN CASE MATCHING RIGHT BRACKET IS NOT FOUND  */
          if (no_stop_found && stop != blank) {
@@ -87,7 +87,7 @@ char **result1;
             stop = blank;
             card_ptr = lp;
             /*  ERROR RECOVERY  */
-            while  (card_image[card_ptr] != blank && card_ptr < card_len) {
+            while (card_image[card_ptr] != blank && card_ptr < card_len) {
                card_ptr = card_ptr + 1;
             }
          }
@@ -107,5 +107,5 @@ char **result1;
       card_ptr = card_ptr + 1;
    }
    card_ptr = 999;
-   return false;        /*  WHEN AT END  OF CARD  */
+   return false;        /*  WHEN AT END OF CARD  */
 }

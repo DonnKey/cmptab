@@ -1,7 +1,7 @@
 /* #### Page 1 */
 struct bitstring {
             int length;         /* in bits */
-            char bits[1];       /* the bits; variable  size*/
+            char bits[1];       /* the bits; variable size*/
         };
 
 typedef struct bitstring * bitstring;

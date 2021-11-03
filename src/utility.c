@@ -6,9 +6,9 @@
 #include "options.h"
 #include "utility.h"
 
-char *options[] = {"ls", "lf", "lt", "ig", "it", "ft", "fg", "sd", "pg", "pi", "ea", "pf", "il", "ap", "go", "ie",  "pt", "sl", "d1", "d2", "d3", "d4", "d5"};
+char *options[] = {"ls", "lf", "lt", "ig", "it", "ft", "fg", "sd", "pg", "pi", "ea", "pf", "il", "ap", "go", "ie", "pt", "sl", "d1", "d2", "d3", "d4", "d5"};
 
-boolean control[sizeof(options)/sizeof(char  *)];
+boolean control[sizeof(options)/sizeof(char *)];
 
 int error_count;
 char *blank_card = "                                                                                ";
@@ -24,13 +24,13 @@ char printbuffer[200];  /*  for sprintf calls */
 */
 
 void error(message, severity)
-/*  print error message, increment  error count.  */
+/*  print error message, increment error count.  */
 char *message;
 int severity;
 {
    printf(" *** error, %s\n", message);
-   switch (severity)  {
-   case 0: /* no-op  */;
+   switch (severity) {
+   case 0: /* no-op */;
       break;
    case 1: error_count = error_count  + 1;
       break;
@@ -42,7 +42,7 @@ int severity;
  /* ***************
 
  char* i_format(i, len, blank_zero)
-/*  print in i format, blank when zero  on switch  *?
+/*  print in i format, blank when zero on switch  *?
 int i, len;
 boolean blank_zero;
 {
@@ -52,7 +52,7 @@ static char str[80];
         strncpy(str, blank_card,80);
         str[len] = '\0';
    }
-   else  {
+   else {
         sprintf(str,"%*d",len,i);
 /* #### Page 2 *?
    }
@@ -63,7 +63,7 @@ static char str[80];
 ***** */
 
 int max(i, j)
-/*  return max of i and j  */
+/* return max of i and j  */
 int i, j;
 {
    if (i > j) return i;
@@ -93,21 +93,21 @@ va_dcl
 
     str[O] ='\0';
     va_start(argp);
-    while ((t = va_arg(argp, char  *)) != (char *)0))
+    while ((t = va_arg(argp, char *)) != (char *)0))
         strncat(str,t,500);
     va_end(argp);
     return str;
 }
  ************************ */
 int integer(str, msg)
-/*  convert string to number  and gripe if bad  */
+/*  convert string to number and gripe if bad  */
 char *str, *msg;
 {
    long i;
    char *resptr;
 
    i = strtol(str, &resptr, 0);
-   if (resptr == str  || resptr != str + strlen(str)) {
+   if (resptr == str || resptr != str + strlen(str)) {
       sprintf(printbuffer, "numeric error for %s reading %s, value %d was used.",
         msg, str, i);
 /* #### Page 3 */
@@ -126,14 +126,14 @@ char *string;
    static char str[80];
 
 #ifdef checking
-   if (ln > 80  error("strlen too  long for pad_l; bye",2);
+   if (ln > 80) error("strlen too long for pad_l; bye",2);
 #endif
-   if (strlen(str) >= ln)  {
+   if (strlen(str) >= ln) {
         strncpy(str, string, 80);
         str[lnj='\0';
    }
    else {
-      strncpy(str, blank_card,  ln-strlen(str)));
+      strncpy(str, blank_card, ln-strlen(str)));
       strncat(str, string, 80);
    }
    return str;
@@ -147,7 +147,7 @@ char *string;
    static char str[80];
    strncpy(str, string, 80),
    if (strlen(str) >= ln) str[ln]='\O';
-   else strncat(str, blank_card,  ln);
+   else strncat(str, blank_card, ln);
 
    return str;
 }
@@ -156,7 +156,7 @@ char *string;
 
  /* ************
  void line_out(number, line)
-/*  number a line and print  it  *?
+/*  number a line and print it  *?
 int number;
 char *line;
 {
@@ -173,20 +173,20 @@ int argc;
 {
       int i, j;
 
-   for (i=1; i<argc; i++)  {
-      for (j=0; j<(sizeof(options)/sizeof(char  *)); j++) {
+   for (i=1; i<argc; i++) {
+      for (j=0; j<(sizeof(options)/sizeof(char *)); j++) {
          if (strcmp(argv[i], options[j])==0) control[j] = true;
       }
    }
-   if (control[lt]) control[sd]  = true;
+   if (control[lt]) control[sd] = true;
 }
 /* ***************
-void condout(control_val,  text)
+void condout(control_val, text)
 
 int control_val;
 char *text;
 {
-   if (control[control_val])  puts(text);
+   if (control[control_val]) puts(text);
 }
 *********** */
 char *newstring(s)
