@@ -80,7 +80,6 @@ void read_table()
          error("state previously defined", 1);
       else
          x_set(&states_used, state);
-
       for (sym = 1; sym <= no_terminals; sym++) {
          next_item(&result_item);
          if (e_o_f) {
@@ -135,7 +134,7 @@ void read_table()
           }
       }
 
-      sym =first_nt;
+      sym = first_nt;
       /*  READ ONLY AS MANY NT-S AS PROVIDED  */
 
       while (next_item(&result_item)) {
@@ -224,7 +223,7 @@ void echo_table()
       first_time = false;
 /* #### Page 5 */
    printf("                       t h e   v o c a b u l a r y\n\n");
-   printf("     t e r m i n a l   s y m b o l s     n o n t e r m i n a l s\n\n");
+   printf("     t e r m i n a l  s y m b o l s     n o n t e r m i n a l s\n\n");
    for (n = 1; n <= max(no_terminals, no_nts); n++) {
 
       /*  PRINT THE VOCABULARY   */
@@ -332,10 +331,10 @@ void punch_table()
    }
    fprintf(mso,"\n");
 
-   charpos = 0;
 /* #### Page 7 */
    for (state = 0; state <= no_states; state++) {
-      printf("%3d", state);
+      charpos = 0;
+      fprintf(mso, "%3d", state);
       for (symbol = 1; symbol <= last_nt; symbol++) {
          actn_entry = full_action(state, symbol);
 
@@ -350,8 +349,8 @@ void punch_table()
          str = "?";
       else
          str = v[prod_array[prod_start[n]]];
-      printf("%2d %12s ", rhs_len[n], str);
-      if ((charpos += min(strlen(v[symbol]), 14)+4) > 75) {fprintf(mso,"$\n");charpos=0;}
+      fprintf(mso, "%2d %-12s ", rhs_len[n], str);
+      if ((charpos += min(strlen(str), 14)+4) > 75) {fprintf(mso,"$\n");charpos=0;}
    }
    fprintf(mso,"\n");
 }

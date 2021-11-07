@@ -48,7 +48,7 @@ boolean blank_zero;
 {
 static char str[80];
 
-   if (blank_zero && i == O) {
+   if (blank_zero && i == 0) {
         strncpy(str, blank_card,80);
         str[len] = '\0';
    }

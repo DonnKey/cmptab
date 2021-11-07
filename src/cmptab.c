@@ -164,8 +164,9 @@ void find_all_inaccessibles()
            for (sym = 1; sym <= last_nt; sym++) {
                action_t = action_type(stripped_action_table(state_no, sym));
                if (x_test(marks[state_no], sym)) {
-                 if (action_t == PHI || action_t == ESSENTIAL_ERROR)
+                  if (action_t == PHI || action_t == ESSENTIAL_ERROR) {
                      action_table(state_no, sym) = error_entry;
+                  }
 /* #### Page 4 */
                }
                else if (action_t != PHI) {
@@ -186,8 +187,9 @@ void find_all_inaccessibles()
          }
          else if (accessing_symbol[state_no] != 0) {
             for(sym = 1; sym <= no_terminals; sym++) {
-            if (action_type(stripped_action_table(state_no, sym)) == PHI)
-               action_table(state_no, sym) = error_entry;
+               if (action_type(stripped_action_table(state_no, sym)) == PHI) {
+                  action_table(state_no, sym) = error_entry;
+               }
             }
          }
       }
@@ -207,9 +209,10 @@ void check_lhs_use()
    state_removed = false;
    for (sym = first_nt; sym <= last_nt; sym++) {
      if (!x_test(lhs_used, sym)) {
-        if (list_trace)
+         if (list_trace) {
            printf("Symbol %s is never on the left and thus removed.\n",v[sym]);
-        for (state_no = 0; state_no <= no_states; state_no++) {
+         }
+         for (state_no = 0; state_no <= no_states; state_no++) {
             action_table(state_no, sym) = phi_entry;
             if (accessing_symbol[state_no] == sym) {
                if (list_trace) printf("State %d was removed.\n",state_no);
@@ -473,7 +476,7 @@ char *title;
             printf("  >");
          else
             printf("   ");
-         if (x_test(marks[i], i))
+         if (x_test(marks[1], i))
             printf(">");
          else
             printf(" ");
@@ -489,7 +492,6 @@ boolean find_right_part(rule_x, p, rf, marks, position)
 rule_no rule_x;
 set_of_states p[];
 set_of_syms *rf;
-
 bitstring marks[2];
 int *position;
 {
@@ -598,13 +600,14 @@ int *position;
             markpos_1 = *position;
             markcnt_1 = markcnt_1 + 1;
          }
-        *position = *position + 1;
+         *position = *position + 1;
       }
-     end_find_rhs:
+
+      end_find_rhs:
 
      /* WE NOW HAVE TRACED BACK AS FAR AS WE CAN, INSPECT THE MARKS TO SEE
         WHETHER THERE IS A PROPER MARK, AND CHOOSE THE STRONGEST POSSIBLE. THIS
-         LOGIC IS IRRELEVENT IF THE LENGTH AND LHS ARE KNOWN, BUT NECCESSARY
+        LOGIC IS IRRELEVENT IF THE LENGTH AND LHS ARE KNOWN, BUT NECCESSARY
         OTHERWISE.  */
 
      if (markcnt_0 == 0) {
@@ -770,18 +773,19 @@ int *position;
             goto_size = x_count(goto_set[nt_sym]);
             if (*best_lhs == 0) {
                *best_lhs = nt_sym;
-               best_gtf = lim_goto_follow;
+               best_gtf = newbits(lim_goto_follow);
                best_gtf_size = gtf_size;
-               best_goto = goto_set[nt_sym];
+               best_goto = newbits(goto_set[nt_sym]);
                best_goto_size = goto_size;
             }
             else if (gtf_size < best_gtf_size
                || (gtf_size == best_gtf_size && goto_size <best_goto_size)) {
                *best_lhs = nt_sym;
                freebits(&best_gtf);
-               best_gtf = lim_goto_follow;
+               best_gtf = newbits(lim_goto_follow);
                best_gtf_size = gtf_size;
-               best_goto = goto_set[nt_sym];
+               freebits(&best_goto);
+               best_goto = newbits(goto_set[nt_sym]);
                best_goto_size = goto_size;
             }
 /* #### Page 15 */
@@ -1105,7 +1109,7 @@ table_state error_state;
             }
             freebits(&t_g);
             freebits(&g);
-            g = g_minus_1;
+            g = newbits(g_minus_1);
             i = i - 1;
          }
          /*  WE HAVE THE RESTRICTED START SET. CHECK THAT THERE IS AN ERROR
@@ -1303,7 +1307,8 @@ table_state state_r;    /*  THE ROW TO COMBINE INTO  */
                COMBINATION IS COMPLETED  */
             }
 
-            else if (action_type(actn_p) == REDUCE
+            /*else if (action_type(actn_p) == REDUCE      DT 11/21 */
+            else if ((action_type(actn_p) == REDUCE || action_type(actn_p) == ACCEPT_STATE)
                   && action_type(actn_q) == ESSENTIAL_ERROR) {
                l = combine_reduces(state_q, sym, action_rule(actn_p));
                if (!l) {
@@ -1316,8 +1321,9 @@ table_state state_r;    /*  THE ROW TO COMBINE INTO  */
                }
             }
 
-            else if (action_type(actn_q) == REDUCE &&
-                     action_type(actn_p) == ESSENTIAL_ERROR) {
+            /*else if (action_type(actn_q) == REDUCE &&     DT 11/21 */
+            else if ((action_type(actn_q) == REDUCE || action_type(actn_q) == ACCEPT_STATE)
+                  && action_type(actn_p) == ESSENTIAL_ERROR) {
                l = combine_reduces(state_p, sym, action_rule(actn_q));
                if (!l) {
                   result = false;
@@ -1371,11 +1377,13 @@ table_state state_r;    /*  THE ROW TO COMBINE INTO  */
                /*  THEY MUST BE GOING TO BE COMBINED LATER  */
                action_table(state_r, sym) = actn_p; /*  OR Q, EITHER ONE  */
             }
-            else if (action_type(actn_p) == REDUCE
+            /*else if (action_type(actn_p) == REDUCE   DT 11/21 */
+            else if ((action_type(actn_p) == REDUCE || action_type(actn_p) == ACCEPT_STATE)
                   && action_type(actn_q) == ESSENTIAL_ERROR) {
                action_table(state_r, sym) = actn_p;
             }
-            else if (action_type(actn_q) == REDUCE
+            /*else if (action_type(actn_q) == REDUCE   DT 11/21 */
+            else if ((action_type(actn_q) == REDUCE || action_type(actn_q) == ACCEPT_STATE)
                   && action_type(actn_p) == ESSENTIAL_ERROR) {
                action_table(state_r, sym) = actn_q;
             }
@@ -1388,6 +1396,7 @@ table_state state_r;    /*  THE ROW TO COMBINE INTO  */
          }
          result = true;
       done:
+
       freebits(&this_pair);
       return result;
 }

@@ -58,7 +58,7 @@ int bitindex;
    if (bitindex < 0) return;
    if ((bitindex+8)/8 > ((*str)->length+8)/8) {
      *str = (bitstring) realloc(*str,sizeof(struct bitstring) + (bitindex+8)/8);
-     for (i=((*str)->length+8)/8+i;i <= (bitindex+8)/8; i++) (*str)->bits[i]=0;
+     for (i=((*str)->length+8)/8+1;i <= (bitindex+8)/8; i++) (*str)->bits[i]=0;
    }
    if ((*str)->length < bitindex) (*str)->length = bitindex;
    (*str)->bits[bitindex/8] |= 0x80>>bitindex%8;
@@ -74,7 +74,7 @@ int bitindex;
    if (bitindex < 0) return;
    if ((bitindex+8)/8 > ((*str)->length+8)/8) {
       *str = (bitstring) realloc(*str,sizeof(struct bitstring) + (bitindex+8)/8);
-      for (i=((*str)->length+8)/8+i;i <= (bitindex+8)/8; i++)(*str)->bits[i]=0;
+      for (i=((*str)->length+8)/8+1; i <= (bitindex+8)/8; i++) (*str)->bits[i]=0;
    }
    if ((*str)->length < bitindex) (*str)->length = bitindex;
    (*str)->bits[bitindex/8] &= ~(0x80>>bitindex%8);
@@ -85,6 +85,7 @@ boolean x_test(str, bitindex)
 bitstring str;
 int bitindex;
 {
+   if (!str) return 0;
    if (bitindex > str->length) return 0;
    if (bitindex < 0) return 0;
    return (str->bits[bitindex/8] & (0x80>>(bitindex%8))) != 0;
@@ -146,7 +147,7 @@ bitstring *str0, str1, str2;
    len = (str2->length+8)/8;
    len--;
    for (i = 0; i<len; i++) {
-      (*str0)->bits[i] = str2->bits[i] |str1->bits[i];
+      (*str0)->bits[i] = str2->bits[i] | str1->bits[i];
    }
    (*str0)->bits[len] = str1->bits[len] |
            (str2->bits[len] & ~(0x7f >> (str2->length%8)));

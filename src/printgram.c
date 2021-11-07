@@ -41,7 +41,7 @@ production_ptr n;
    for (s = var + 1; s <= var + rhs_len[n]; s++) {
 /*   if (left_precedence[prod_array[s]] != 0)
          printf(" (p%d)",left_precedence[prod_array[s]]);  */
-     printf(" 4s", v[prod_array[s]]);
+     printf(" %s", v[prod_array[s]]);
 /*   if (right_precedence[prod_array[s]] != 0)
          printf(" (p%d)  ",right_precedence[prod_array[s]]); */
    }
@@ -91,7 +91,7 @@ int print, punch;
    /*  THE PRODUCTION ADDED AUTOMATICALLY IS NOT PRINTED  */;
    v[last_nt + 1] = "?";
    for (i = first_nt; i <= last_nt + 1; i++) {
-      order[i] = 1;
+      order[i] = i;
    }
    order[first_nt] = goal_symbol;
    order[goal_symbol] = first_nt;
