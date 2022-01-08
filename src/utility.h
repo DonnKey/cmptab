@@ -1,4 +1,3 @@
-/* #### Page 1 */
 void error();
 int max();
 int min();
@@ -11,13 +10,12 @@ void line_out();
 */
 void set_control();
 char *newstring();
-void freestr1ng();
+void freestring();
 
 extern char *blank_card;
 extern int error_count;
 extern char printbuffer[];
 
-#define eject_page  printf("\f")
-/* #### Page 2 */
+#define eject_page printf("\f")
 #define double_space printf("\n\n")
 #define single_space printf("\n")

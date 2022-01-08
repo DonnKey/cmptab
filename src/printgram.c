@@ -29,11 +29,11 @@ production_ptr n;
    sym = prod_array[prod_start[n]];
    /*  set up the left part   */
    if (sym == last_lhs_printed) {
-      printf("%4d %.*s     | ",n, strlen(v[sym]),blank_card);
+      printf("%4d %.*s    |  ",n, strlen(v[sym]),blank_card);
    }
    else {
       printf("\n");
-      printf("%4d %s   ::= ",n,v[sym]);
+      printf("%4d %s  ::=  ",n,v[sym]);
    }
    last_lhs_printed = sym;
    /*  add on the right part  */
@@ -57,11 +57,11 @@ production_ptr n;
 /* #### Page 2 */
    sym = prod_array[prod_start[n]];
    /*  SET UP THE LEFT PART   */
-   if (sym == last_lhs_punched)  {
+   if (sym == last_lhs_punched) {
       fprintf(mso, "%.*s ", strlen(v[sym]),blank_card);
    }
    else {
-      fprintf(mso, "%4s",v[sym]);
+      fprintf(mso, "%s ",v[sym]);
    }
    /*  ADD ON THE RIGHT PART   */
    var = prod_start[n];
@@ -100,8 +100,8 @@ int print, punch;
       for (n = 1; n <= no_prods; n++) {
          if (prod_start[n] != 0 && prod_array[prod_start[n]] == lhs) {
             /*  IF ITS THERE   */
-            if (print)print_prod(n);
-            if (punch)punch_prod(n);
+            if (print) print_prod(n);
+            if (punch) punch_prod(n);
          }
       }
    }

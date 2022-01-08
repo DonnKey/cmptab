@@ -7,12 +7,11 @@
 #include "utility.h"
 #include "nextitem.h"
 
-
-/*                      ********************************
-                        *                              *
-                        *         READ INPUT           *
-                        *                              *
-                        ********************************
+/*                      ******************************
+                        *                            *
+                        *         READ INPUT         *
+                        *                            *
+                        ******************************
 */
 
 #define CARD_SIZE 200
@@ -24,8 +23,8 @@ static boolean continued_card;
 /* static */ boolean read_card()
 {
       int j;
-      if (e_o_f) return false;
 
+      if (e_o_f) return false;
       /*  READ AND RETURN A CARD IMAGE OR FALSE ON EOF  */;
       card_ptr = 0;
       while (true) {
@@ -33,7 +32,7 @@ static boolean continued_card;
             e_o_f = true;
             return false;
          }
-         /*  GUARANTEE A BLANK IN TEST FOR META BRACKETS  */
+         /*  GUARANTEE A BLANK IN TEST FOR META BRACKETS. */
          if (control[ls]) printf("%s", card_image);
          card_len = strlen(card_image);
          card_len--;
@@ -43,8 +42,9 @@ static boolean continued_card;
          for (j=0; j<card_len; j++) if (card_image[j] != ' ') return true;
       }
 }
-/*  GET THE NEXT TOKEN OFF THE CARD.   RETRUN TRUE IF MORE CARD REMAINS,
-    FALSE IF AT END OF THE CARD (OR EOF).  TOKENS ARE EITHER CONVENTIONAL BLANK
+
+/*  GET THE NEXT_TOKEN OFF THE CARD.  RETRUN TRUE IF MORE CARD REMAINS,
+    FALSE IF AT END OF THE CARD (OR EOF). TOKENS ARE EITHER CONVENTIONAL BLANK
     SEPARATED STRINGS OR STRINGS (CONTAINING BLANKS) ENCOLSED IN META BRACKETS*/
 
 boolean next_item(result1)
@@ -69,17 +69,17 @@ char **result1;
       }
 
       if (card_image[card_ptr] != blank) {
-         lp = card_ptr;          /*  MARK LEFT BOUNDARY  */
+         lp = card_ptr;         /*  MARK LEFT BOUNDARY  */
          if (card_image[lp] == left_bracket && card_image[lp + 1] != blank)
                stop = right_bracket;
          else  stop = blank;
-         /*  NOW  LOOK FOR STOP  */;
+         /*  NOW LOOK FOR STOP  */;
          no_stop_found = true;
          while (no_stop_found && card_ptr < card_len) {
             card_ptr = card_ptr + 1;
             if (card_image[card_ptr] == stop) no_stop_found = false;
          }
-         /*   IN CASE MATCHING RIGHT BRACKET IS NOT FOUND  */
+         /*  IN CASE MATCHING RIGHT BRACKET IS NOT FOUND  */
          if (no_stop_found && stop != blank) {
             sprintf(str,"unmatched bracket: %c starting at %s",
                stop, card_image[lp]);
@@ -94,11 +94,11 @@ char **result1;
          if (stop != blank && card_ptr < card_len) card_ptr++;
          if (card_image[card_ptr] != blank && card_image[card_ptr] != '\0') {
             sprintf(str,"space must follow bracket: starting at %s",
-               card_image[lp]),
+                card_image[lp]);
             error(str,0);
          }
          /*  PICK UP LAST CHARACTER  */
-         /*  IT WAS A SYMBOL, LOOK_UP AND RETURN   */
+         /*  IT WAS A SYMBOL, LOOK UP AND RETURN  */
          *result1 = &card_image[lp];
          card_image[card_ptr] = '\0';
          card_ptr++;

@@ -4,6 +4,9 @@ SLR1 table compression with (ambiguous) grammar extraction
 This program is one of a pair to compress and expand SLR(1) (and some LR(1)) 
 grammars along with their corresponding tables.
 
+See Also: unslr, the table expansion program, adjacent to this repository
+in GitHub.
+
 The tables can be considered something like a "Fourrier Transform" of the 
 grammar -- another way to look at the same information, and thus manipulate 
 that information more easily for certain tasks.
@@ -84,6 +87,10 @@ The algoritghms used are discussed in detail in:
 Department of Computer Science (now Allen School of Computer Science)
 Technical Report No. 78-11-02
 University of Washington
+
+## Building
+This Git repo along with the standard C libraries and a compatible compiler
+is all it takes to build this program.  CMake selects c89 gcc, which is fine.
 
 ## Running
 The program runs as a utility program, accepting an input file describing the

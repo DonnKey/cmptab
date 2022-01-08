@@ -8,19 +8,22 @@
 
 char *options[] = {"ls", "lf", "lt", "ig", "it", "ft", "fg", "sd", "pg", "pi", "ea", "pf", "il", "ap", "go", "ie", "pt", "sl", "d1", "d2", "d3", "d4", "d5"};
 
+long strtol();
+
 boolean control[sizeof(options)/sizeof(char *)];
+boolean list_trace;
 
 int error_count;
 char *blank_card = "                                                                                ";
 
-char printbuffer[200];  /*  for sprintf calls */
+char printbuffer[200];  /* for sprintf calls */
 
 /*
-                     ***************************************
-                     *                                     *
-                     *         utility  procedures         *
-                     *                                     *
-                     ***************************************
+                     **************************************
+                     *                                    *
+                     *         utility procedures         *
+                     *                                    *
+                     **************************************
 */
 
 void error(message, severity)
@@ -32,16 +35,16 @@ int severity;
    switch (severity) {
    case 0: /* no-op */;
       break;
-   case 1: error_count = error_count  + 1;
+   case 1: error_count = error_count + 1;
       break;
    case 2: exit(1);
       break;
    }
 }
 
- /* ***************
+/* **************
 
- char* i_format(i, len, blank_zero)
+char* i_format(i, len, blank_zero)
 /*  print in i format, blank when zero on switch  *?
 int i, len;
 boolean blank_zero;
@@ -51,16 +54,15 @@ static char str[80];
    if (blank_zero && i == 0) {
         strncpy(str, blank_card,80);
         str[len] = '\0';
+/* #### Page 2 *?
    }
    else {
         sprintf(str,"%*d",len,i);
-/* #### Page 2 *?
    }
-
    return str;
 }
 
-***** */
+*** */
 
 int max(i, j)
 /* return max of i and j  */
@@ -79,26 +81,26 @@ int i, j;
    return j;
 }
 
-/* ****************
+/* **************
 #include <varargs.h>
 #define MAXARGS    100
-/* VARARGSO *?
+/* VARARGS0 *?
 char *concat(va_alist)
 va_dcl
 {
     va_list argp;
-    int argno = O;
+    int argno = 0;
     static char str[500];
     char *t;
-
-    str[O] ='\0';
+    str[0] ='\0';
     va_start(argp);
-    while ((t = va_arg(argp, char *)) != (char *)0))
+    while ((t = va_arg(argp, char *)) != (char *)0)
         strncat(str,t,500);
     va_end(argp);
     return str;
 }
  ************************ */
+
 int integer(str, msg)
 /*  convert string to number and gripe if bad  */
 char *str, *msg;
@@ -107,16 +109,16 @@ char *str, *msg;
    char *resptr;
 
    i = strtol(str, &resptr, 0);
+/* #### Page 3 */
    if (resptr == str || resptr != str + strlen(str)) {
       sprintf(printbuffer, "numeric error for %s reading %s, value %d was used.",
         msg, str, i);
-/* #### Page 3 */
       error(printbuffer, 1);
    }
    return i;
 }
 
- /* ******************
+/* ******************
 
 char *pad_l(in, string)
 /*  pad to the left to len  *?
@@ -130,23 +132,24 @@ char *string;
 #endif
    if (strlen(str) >= ln) {
         strncpy(str, string, 80);
-        str[lnj='\0';
+        str[ln]='\0';
    }
    else {
-      strncpy(str, blank_card, ln-strlen(str)));
+      strncpy(str, blank_card, ln-strlen(str));
       strncat(str, string, 80);
    }
    return str;
 }
 
 char *pad_r(ln, string)
-/*  pad to the right to len   *?
+/*  pad to the right to len  *?
 int ln;
 char *string;
 {
    static char str[80];
-   strncpy(str, string, 80),
-   if (strlen(str) >= ln) str[ln]='\O';
+
+   strncpy(str, string, 80);
+   if (strlen(str) >= ln) str[ln]='\0';
    else strncat(str, blank_card, ln);
 
    return str;
@@ -154,19 +157,18 @@ char *string;
 
 ************* */
 
- /* ************
- void line_out(number, line)
+/* ***********
+void line_out(number, line)
 /*  number a line and print it  *?
 int number;
 char *line;
 {
    printf("%6d   %s",number,line);
 }
-
-******* */
+*********/
+/* #### Page 4 */
 
 void set_control(argc, argv)
-/* #### Page 4 */
 /*  scan card for options and set or reset control. */
 char **argv;
 int argc;
@@ -189,11 +191,12 @@ char *text;
    if (control[control_val]) puts(text);
 }
 *********** */
+
 char *newstring(s)
 char *s;
 {
         char *t;
-        t=(char *)malloc (strlen(s)+1);
+        t=(char *)malloc(strlen(s)+1);
         strcpy(t,s);
         return t;
 }

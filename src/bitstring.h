@@ -1,7 +1,7 @@
 /* #### Page 1 */
 struct bitstring {
             int length;         /* in bits */
-            char bits[1];       /* the bits; variable size*/
+            char bits[1];       /* the bits; variable size */
         };
 
 typedef struct bitstring * bitstring;
@@ -14,6 +14,7 @@ void x_and();
 void x_or();
 void x_minus();
 void x_setempty();
+void x_not();
 int x_count();
 boolean x_empty();
 boolean x_equal();

@@ -5,11 +5,11 @@
 #include "grammar.h"
 #include "table.h"
 
-/* ***************
+/* **********************(Applies to original XPL/S source)
 table_entry action_table(i, j, k)
 {
 /* IMPLEMENTS A PSEUDO 2 DIMENSIONAL ARRAY ACTION_TABLE.
-   RETURNS ONLY THE SIGINFICANT PART,WITHOUT THE FLAG BIT.
+   RETURNS ONLY THE SIGINFICANT PART, WITHOUT THE FLAG BIT.
    BECAUSE OF THE NATURE OF PROCEDURE CALL CODE GENERATION
    THE STATEMENT ACTION_TABLE(A,B) = ACTION_TABLE(C,D)
    DOES NOT WORK PROPERLY.  IN ALL CASES WHERE THIS IS DONE
@@ -23,7 +23,7 @@ table_entry action_table(i, j, k)
    x = i * (largest_nt + 1) + j;
    if (x > MAX_NO_TABLE_ENTRIES)
         error("action table overflow", 2);
-   if (k == infinity) { /*  CALLED ON  RIGHT  *?
+   if (k == infinity) { /*  CALLED ON RIGHT  *?
       return a_t[x] & Ox7fff;
    }
    else {
@@ -34,7 +34,7 @@ table_entry action_table(i, j, k)
 
 table_entry full_action(i, j)
 {
-/* IMPLEMENTS A PSEUDO 2 DIMENSIONAL ARRAY ACTION TABLE.
+/* IMPLEMENTS A PSEUDO 2 DIMENSIONAL ARRAY ACTION_TABLE.
    THIS VERSION IS READ ONLY, AND RETURNS THE FLAG BIT AS WELL
    AS THE REST OF THE DATA *?
    table_state i;
@@ -43,22 +43,21 @@ table_entry full_action(i, j)
 
    x = i * (largest_nt + 1) + j;
    if (x > MAX_NO_TABLE_ENTRIES)
-        error("action table overflow"   2);
+        error("action table overflow", 2);
    return a_t[x];
 }
-************/
-
-
+***************/
+/* #### Page 2 */
 
 void find_action(actn_entry, i, j)
 table_entry actn_entry;
-/* #### Page 2 */
 table_state *i;
 vocab_symbol *j;
 {
    /*  FIND THE NEXT POSITION CONTAINING ACTION STARTING FROM I,J RETURNS TRUE
    IF FOUND, WITH POSITION AS (I,J)  */
    int k;
+
    for (k = *i * (largest_nt + 1) + *j;
         k <= no_states * (largest_nt + 1) + largest_nt; k++) {
       if ((a_t[k] & 0x7fff) == actn_entry) {

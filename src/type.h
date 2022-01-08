@@ -1,7 +1,7 @@
 /* #### Page 1 */
 #include <malloc.h>
 
-typedef char boolean;
+typedef unsigned char boolean;
 #define true 1
 #define false 0
 
@@ -14,4 +14,4 @@ typedef char boolean;
 #define right_bracket '>'
 #define left_bracket '<'
 
-typedef char counter;           /*  COUNTS  ENTRIES IN LIST TYPE TABLES  */
+typedef unsigned char counter;  /*  COUNTS ENTRIES IN LIST TYPE TABLES  */
