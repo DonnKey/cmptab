@@ -363,6 +363,10 @@ void punch_table()
          str = "?";
       else
          str = v[prod_array[prod_start[n]]];
+      if (str == NULL) {
+         str = "??";
+      }
+
       fprintf(mso, "%2d %-12s ", rhs_len[n], str);
       if ((charpos += min(strlen(str),14)+4) > 75) {fprintf(mso,"$\n");charpos=0;}
    }

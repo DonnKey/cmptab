@@ -1,0 +1,378 @@
+                      t h e   v o c a b u l a r y
+
+     t e r m i n a l  s y m b o l s     n o n t e r m i n a l s
+
+  1  +                                  <E>
+  2  *                                  <T>
+  3  (                                  <F>
+  4  )                                  
+  5  a                                  
+  6  &                                  
+
+Rule length and lhs
+  1:  ?             2:  ?             3:  ?             4:  ?           
+  5:  ?             6:  ?           
+
+
+The shift/reduce table
+  state         symbols
+               1       3       5     |   1       3    
+                   2       4       6 |       2    
+         0 |   -   -  s5   -  s4   - |   1   2   3
+    <E>  1 |  s6   -   -   -   -   a |            
+    <T>  2 |  r2  s7   -   -   -  r2 |            
+    <F>  3 |  r4  r4   -   -   -  r4 |            
+      a  4 |  r6  r6   -   -   -  r6 |            
+      (  5 |   -   - s12   - s11   - |   8   9  10
+      +  6 |   -   -  s5   -  s4   - |      13   3
+      *  7 |   -   -  s5   -  s4   - |          14
+    <E>  8 | s16   -   - s15   -   - |            
+    <T>  9 |  r2 s17   -  r2   -   - |            
+    <F> 10 |  r4  r4   -  r4   -   - |            
+      a 11 |  r6  r6   -  r6   -   - |            
+      ( 12 |   -   - s12   - s11   - |  18   9  10
+    <T> 13 |  r1  s7   -   -   -  r1 |            
+    <F> 14 |  r3  r3   -   -   -  r3 |            
+      ) 15 |  r5  r5   -   -   -  r5 |            
+      + 16 |   -   - s12   - s11   - |      19  10
+      * 17 |   -   - s12   - s11   - |          20
+    <E> 18 | s16   -   - s21   -   - |            
+    <T> 19 |  r1 s17   -  r1   -   - |            
+    <F> 20 |  r3  r3   -  r3   -   - |            
+      ) 21 |  r5  r5   -  r5   -   - |            
+
+A strong mark was used for reduction 1:
+                13 19
+  > <T>          6 16
+    +            1  8 18
+  >><E>          0  5 12
+    <E>          exact l.h.s
+
+A strong mark was used for reduction 2:
+                 2  9
+  >><T>          0  5 12
+    <E>          exact l.h.s
+
+A strong mark was used for reduction 3:
+                14 20
+    <F>          7 17
+    *            2  9 13 19
+  >><T>          0  5  6 12 16
+    <T>          exact l.h.s
+
+A strong mark was used for reduction 4:
+                 3 10
+  >><F>          0  5  6 12 16
+    <T>          exact l.h.s
+
+A strong mark was used for reduction 5:
+                15 21
+    )            8 18
+    <E>          5 12
+  >>(            0  5  6  7 12 16 17
+    <F>          exact l.h.s
+
+A strong mark was used for reduction 6:
+                 4 11
+  >>a            0  5  6  7 12 16 17
+    <F>          exact l.h.s
+
+                      t h e   v o c a b u l a r y
+
+     t e r m i n a l  s y m b o l s     n o n t e r m i n a l s
+
+  1  +                                  <E>
+  2  *                                  <T>
+  3  (                                  <F>
+  4  )                                  
+  5  a                                  
+  6  &                                  
+
+Rule length and lhs
+  1:  3, <E>          2:  1, <E>          3:  3, <T>          4:  1, <T>        
+  5:  3, <F>          6:  1, <F>        
+
+
+The shift/reduce table
+  state         symbols
+               1       3       5     |   1       3    
+                   2       4       6 |       2    
+         0 |   -   -  s5   -  s4   - |   1   2   3
+    <E>  1 |  s6   -   -   -   -   a |            
+    <T>  2 |  r2  s7   -   -   -  r2 |            
+    <F>  3 |  r4  r4   -   -   -  r4 |            
+      a  4 |  r6  r6   e   e   e  r6 |            
+      (  5 |   e   e s12   e s11   e |   8   9  10
+      +  6 |   e   e  s5   e  s4   e |      13   3
+      *  7 |   e   e  s5   e  s4   e |          14
+    <E>  8 | s16   -   - s15   -   - |            
+    <T>  9 |  r2 s17   -  r2   -   - |            
+    <F> 10 |  r4  r4   -  r4   -   - |            
+      a 11 |  r6  r6   e  r6   e   e |            
+      ( 12 |   e   e s12   e s11   e |  18   9  10
+    <T> 13 |  r1  s7   -   -   -  r1 |            
+    <F> 14 |  r3  r3   -   -   -  r3 |            
+      ) 15 |  r5  r5   e   e   e  r5 |            
+      + 16 |   e   e s12   e s11   e |      19  10
+      * 17 |   e   e s12   e s11   e |          20
+    <E> 18 | s16   -   - s21   -   - |            
+    <T> 19 |  r1 s17   -  r1   -   - |            
+    <F> 20 |  r3  r3   -  r3   -   - |            
+      ) 21 |  r5  r5   e  r5   e   e |            
+
+
+
+                     t h e   p r o d u c t i o n s
+
+
+   The goal symbol is <E>.
+
+   1 <E>  ::=   <E> + <T>
+   2        |   <T>
+
+   3 <T>  ::=   <T> * <F>
+   4        |   <F>
+
+   5 <F>  ::=   ( <E> )
+   6        |   a
+
+
+Rows 15 and 21 were compatibly combined as 15
+Rows 8 and 18 were compatibly combined as 8
+Rows 5 and 12 were compatibly combined as 5
+Rows 4 and 11 were compatibly combined as 4
+Rows 14 and 20 were compatibly combined as 14
+Rows 7 and 17 were compatibly combined as 7
+Rows 13 and 19 were compatibly combined as 13
+Duplicate occrrences of rule 1 were combined above from state 13 and 19 into 13.
+Rows 2 and 9 were compatibly combined as 2
+Duplicate occrrences of rule 2 were combined above from state 2 and 9 into 2.
+Rows 3 and 10 were compatibly combined as 3
+Duplicate occrrences of rule 4 were combined above from state 3 and 10 into 3.
+Identical states 6 and 16 were combined into 6.
+Row 13 was moved to 9.
+Row 14 was moved to 10.
+Row 15 was moved to 11.
+                      t h e   v o c a b u l a r y
+
+     t e r m i n a l  s y m b o l s     n o n t e r m i n a l s
+
+  1  +                                  <E>
+  2  *                                  <T>
+  3  (                                  <F>
+  4  )                                  
+  5  a                                  
+  6  &                                  
+
+Rule length and lhs
+  1:  3, <E>          2:  1, <E>          3:  3, <T>          4:  1, <T>        
+  5:  3, <F>          6:  1, <F>        
+
+
+The shift/reduce table
+  state         symbols
+               1       3       5     |   1       3    
+                   2       4       6 |       2    
+         0 |   -   -  s5   -  s4   - |   1   2   3
+    <E>  1 |  s6   -   -   e   -   a |            
+    <T>  2 |  r2  s7   -  r2   -   e |            
+    <F>  3 |  r4  r4   -  r4   -   e |            
+      a  4 |  r6  r6   e  r6   e   e |            
+      (  5 |   e   e  s5   e  s4   e |   8   2   3
+      +  6 |   e   e  s5   e  s4   e |       9   3
+      *  7 |   e   e  s5   e  s4   e |          10
+    <E>  8 |  s6   -   - s11   -   e |            
+    <T>  9 |  r1  s7   -  r1   -   e |            
+    <F> 10 |  r3  r3   -  r3   -   e |            
+      ) 11 |  r5  r5   e  r5   e   e |            
+
+
+
+                     t h e   p r o d u c t i o n s
+
+
+   The goal symbol is <E>.
+
+   1 <E>  ::=   <E> + <T>
+   2        |   <T>
+
+   3 <T>  ::=   <T> * <F>
+   4        |   <F>
+
+   5 <F>  ::=   ( <E> )
+   6        |   a
+
+
+                      t h e   v o c a b u l a r y
+
+     t e r m i n a l  s y m b o l s     n o n t e r m i n a l s
+
+  1  +                                  <E>
+  2  *                                  <T>
+  3  (                                  <F>
+  4  )                                  
+  5  a                                  
+  6  &                                  
+
+Rule length and lhs
+  1:  3, <E>          2:  1, <E>          3:  3, <T>          4:  1, <T>        
+  5:  3, <F>          6:  1, <F>        
+
+
+The shift/reduce table
+  state         symbols
+               1       3       5     |   1       3    
+                   2       4       6 |       2    
+         0 |   -   -  s5   -  s4   - |   1   2   3
+    <E>  1 |  s6   -   -   e   -   a |            
+    <T>  2 |  r2  s7   -  r2   -   e |            
+    <F>  3 |  r4  r4   -  r4   -   e |            
+      a  4 |  r6  r6   e  r6   e   e |            
+      (  5 |   e   e  s5   e  s4   e |   8   2   3
+      +  6 |   e   e  s5   e  s4   e |       9   3
+      *  7 |   e   e  s5   e  s4   e |          10
+    <E>  8 |  s6   -   - s11   -   e |            
+    <T>  9 |  r1  s7   -  r1   -   e |            
+    <F> 10 |  r3  r3   -  r3   -   e |            
+      ) 11 |  r5  r5   e  r5   e   e |            
+
+
+
+                     t h e   p r o d u c t i o n s
+
+
+   The goal symbol is <E>.
+
+   1 <E>  ::=   <E> + <T>
+   2        |   <T>
+
+   3 <T>  ::=   <T> * <F>
+   4        |   <F>
+
+   5 <F>  ::=   ( <E> )
+   6        |   a
+
+
+Eliminating rule 2 by combining <E> and <T>
+Rows 1 and 2 were compatibly combined as 12
+Rows 8 and 2 were compatibly combined as 14
+Row 12 was moved to 1.
+Row 14 was moved to 8.
+Row 3 was moved to 2.
+Row 4 was moved to 3.
+Row 5 was moved to 4.
+Row 6 was moved to 5.
+Row 7 was moved to 6.
+Row 8 was moved to 7.
+Row 9 was moved to 8.
+Row 10 was moved to 9.
+Row 11 was moved to 10.
+                      t h e   v o c a b u l a r y
+
+     t e r m i n a l  s y m b o l s     n o n t e r m i n a l s
+
+  1  +                                  <E>
+  2  *                                  <F>
+  3  (                                  
+  4  )                                  
+  5  a                                  
+  6  &                                  
+
+Rule length and lhs
+  1:  3, <E>          3:  3, <E>          4:  1, <E>        
+  5:  3, <F>          6:  1, <F>        
+
+
+The shift/reduce table
+  state         symbols
+               1       3       5     |   1    
+                   2       4       6 |       2    
+         0 |   -   -  s4   -  s3   - |   1   2
+    <E>  1 |  s5  s6   -   e   -   a |        
+    <F>  2 |  r4  r4   -  r4   -   e |        
+      a  3 |  r6  r6   e  r6   e   e |        
+      (  4 |   e   e  s4   e  s3   e |   7   2
+      +  5 |   e   e  s4   e  s3   e |   8   2
+      *  6 |   e   e  s4   e  s3   e |       9
+    <E>  7 |  s5  s6   - s10   -   e |        
+    <E>  8 |  r1  s6   -  r1   -   e |        
+    <F>  9 |  r3  r3   -  r3   -   e |        
+      ) 10 |  r5  r5   e  r5   e   e |        
+
+
+
+                     t h e   p r o d u c t i o n s
+
+
+   The goal symbol is <E>.
+
+   1 <E>  ::=   <E> + <E>
+   3        |   <E> * <F>
+   4        |   <F>
+
+   5 <F>  ::=   ( <E> )
+   6        |   a
+
+
+Eliminating rule 4 by combining <E> and <F>
+Rows 1 and 2 were compatibly combined as 11
+Rows 7 and 2 were compatibly combined as 13
+Rows 8 and 2 were compatibly combined as 14
+Row 11 was moved to 1.
+Row 13 was moved to 7.
+Row 14 was moved to 8.
+Row 3 was moved to 2.
+Row 4 was moved to 3.
+Row 5 was moved to 4.
+Row 6 was moved to 5.
+Row 7 was moved to 6.
+Row 8 was moved to 7.
+Row 9 was moved to 8.
+Row 10 was moved to 9.
+                      t h e   v o c a b u l a r y
+
+     t e r m i n a l  s y m b o l s     n o n t e r m i n a l s
+
+  1  +                                  <E>
+  2  *                                  
+  3  (                                  
+  4  )                                  
+  5  a                                  
+  6  &                                  
+
+Rule length and lhs
+  1:  3, <E>          3:  3, <E>          5:  3, <E>          6:  1, <E>        
+
+
+The shift/reduce table
+  state         symbols
+               1       3       5     |   1    
+                   2       4       6 |    
+         0 |   -   -  s3   -  s2   - |   1
+    <E>  1 |  s4  s5   -   e   -   a |    
+      a  2 |  r6  r6   e  r6   e   e |    
+      (  3 |   e   e  s3   e  s2   e |   6
+      +  4 |   e   e  s3   e  s2   e |   7
+      *  5 |   e   e  s3   e  s2   e |   8
+    <E>  6 |  s4  s5   -  s9   -   e |    
+    <E>  7 |  r1  s5   -  r1   -   e |    
+    <E>  8 |  r3  r3   -  r3   -   e |    
+      )  9 |  r5  r5   e  r5   e   e |    
+
+
+
+                     t h e   p r o d u c t i o n s
+
+
+   The goal symbol is <E>.
+
+   1 <E>  ::=   <E> + <E>
+   3        |   <E> * <E>
+   5        |   ( <E> )
+   6        |   a
+
+
+
+
+
+

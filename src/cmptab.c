@@ -516,6 +516,7 @@ int *position;
       *position = 1;
       x_setempty(&marks[0]);
       x_setempty(&marks[1]);
+      text = text1 = NULL;
 
       /*  CHECK FOR EMPTY RULE POSSIBILITY  */
       for (nt_sym = first_nt; nt_sym <= last_nt; nt_sym++) {
@@ -732,13 +733,13 @@ int *position;
       *best_lhs = 0;
       exact_match = false;
 /* #### Page 14 */
-      /*  COMPUTE THE PRESENCE VEGTOR FROM THE LAST COLUMN OF THE TRACE BACK
+      /*  COMPUTE THE PRESENCE VECTOR FROM THE LAST COLUMN OF THE TRACE BACK
       TABLE  */
       for (nt_sym = first_nt; nt_sym <= last_nt; nt_sym++) {
          if (x_empty(plh[rule_x]) || x_test(plh[rule_x], nt_sym)) {
 
             /*  IS THIS GOING TO BE A SELF ( <U> ::= <U> ) RULE; IF SO IGNORE*/
-            if (length == 1 && nt_sym == symbol_list[1]) break;
+            if (length == 1 && nt_sym == symbol_list[1]) goto end_examine_symbol;
 
             compute_lgtf(start_set, nt_sym,&lim_goto_follow);
 
@@ -750,7 +751,7 @@ int *position;
             possible_rf = x_empty(t_s);
             freebits(&t_s);
 
-            if (!possible_rf || !possible_ss) break;
+            if (!possible_rf || !possible_ss) goto end_examine_symbol;
             if (x_equal(start_set, goto_set[nt_sym])
                && x_equal(lim_goto_follow, reduce_follow)) {
                if (!exact_match)
@@ -764,10 +765,10 @@ int *position;
                   error(printbuffer, 0);
                }
                exact_match = true;
-               break;
+               goto end_examine_symbol;
             }
 
-            if (exact_match) break;
+            if (exact_match) goto end_examine_symbol;
 
             gtf_size = x_count(lim_goto_follow);
             goto_size = x_count(goto_set[nt_sym]);
@@ -790,6 +791,7 @@ int *position;
             }
 /* #### Page 15 */
          }
+         end_examine_symbol:;
       }
       freebits(&best_gtf);
       /* freebits(*best_goto); NOT THIS ONE... it's from a global */
@@ -1897,6 +1899,7 @@ char **argv;
         vocab_symbol old_last_nt;
         vocab_symbol new_nont;
         rule_no rule_x;
+        setvbuf(stdout, NULL, _IONBF, 0); /* ?????????????????? */
         set_control(argc,argv);
 
         initialize();
