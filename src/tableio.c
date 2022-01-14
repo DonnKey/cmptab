@@ -355,6 +355,7 @@ void punch_table()
          if ((charpos += strlen(v[symbol])+1) > 75) {fprintf(mso,"$\n");charpos=0;}
       }
       fprintf(mso,"\n");
+      charpos = 0;
    }
 
    charpos = 0;
