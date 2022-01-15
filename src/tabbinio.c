@@ -33,7 +33,7 @@ bitstring str0;
 {
         int w;
 
-        w = sizeof(struct bitstring)+(str0->length+8)/8;
+        w = x_size(str0);
         fwrite((char *)&w, sizeof(w), 1, mx1);
         fwrite((char *)str0, w, 1, mx1);
 }
